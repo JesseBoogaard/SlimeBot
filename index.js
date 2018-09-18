@@ -1,12 +1,15 @@
+//imports
 const Discord = require('discord.js');
 const {RichEmbed, Client} = require('discord.js');
-const client = new Discord.Client();
-const prefix = "!s";
 const availableSlimes = require('./Data/Slimes.json');
-const embed = new RichEmbed()
+const food = require('./Data/Foods.json');
+
+const client = new Discord.Client();
+const embed = new RichEmbed();
+const prefix = "!s";
 
 client.on('ready', () => {
-    client.user.setActivity('in green pastures!', {type: 'PLAYING'})
+    client.user.setActivity('in green pastures!', {type: 'PLAYING'});
 });
 
 client.on('message', msg => {
@@ -18,9 +21,9 @@ client.on('message', msg => {
         case 'start':
             embed
             .setTitle("Welcome! Let's start a new ranch!")
-            .setColor(0xFF0000)
+            .setColor(0xFFFFFF)
             .setDescription("Welcome to Slimerancher Discord edition! \n Let's start with a nice name for your awesome new ranch!")
-            msg.channel.send(embed)
+            msg.channel.send(embed);
         break;
 
         case 'find':
@@ -32,6 +35,17 @@ client.on('message', msg => {
             .setDescription("A beautiful " + ns.name + " was added to your ranch! \n Go feed it!")
             msg.channel.send(embed)
         break;
+
+        case 'foods':
+            let foods = [];
+            for(let i = 0; i < Object.keys(food).length; i++){
+                foods.push(food[i].name);
+            }
+            embed
+            .setTitle("Available foods are the following")
+            .setColor(0xE05E6B)
+            .setDescription(foods.join(",\n"));
+            msg.channel.send(embed);
         }
     }
 });
