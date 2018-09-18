@@ -4,7 +4,8 @@
       "can_evolve": true,
       "pref_food": "any",
       "class": "Docile",
-      "color": "0xFF69B4"
+      "color": "0xFF69B4",
+      "info": "Pink Slimes are the most common slimes found in Slime Rancher. \n\n Their most notable trait unique to them is that they can eat all foods from the three main food types; Fruit, Meat, and Veggies. \n\n This makes them the easiest Slime to ranch in the game. As a tradeoff, they do not have a favorite food."
     },
     {
       "name": "Tabby Slime",

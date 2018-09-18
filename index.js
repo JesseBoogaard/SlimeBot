@@ -27,12 +27,12 @@ client.on('message', msg => {
         break;
 
         case 'find':
-            let rk = Object.keys(availableSlimes)[Math.floor(Math.random() * Object.keys(availableSlimes).length)]
-            let ns = availableSlimes[rk]
+            let randomKey = Object.keys(availableSlimes)[Math.floor(Math.random() * Object.keys(availableSlimes).length)]
+            let newSlime = availableSlimes[randomKey]
             embed
-            .setTitle("Congrats! You found a " + ns.name)
-            .setColor(ns.color)
-            .setDescription("A beautiful " + ns.name + " was added to your ranch! \n Go feed it!")
+            .setTitle("Congrats! You found a " + newSlime.name)
+            .setColor(newSlime.color)
+            .setDescription("A beautiful " + newSlime.name + " was added to your ranch! \n Go feed it!")
             msg.channel.send(embed)
         break;
 
@@ -46,6 +46,21 @@ client.on('message', msg => {
             .setColor(0xE05E6B)
             .setDescription(foods.join(",\n"));
             msg.channel.send(embed);
+        break;
+
+        case 'info':
+            let slimeInfo;
+            for(let i = 0; i < Object.keys(availableSlimes).length; i++){
+                if(availableSlimes[i].name.toLowerCase() == args.join(" ").toLowerCase()){
+                    slimeInfo = availableSlimes[i]
+                }
+            }
+            embed
+            .setTitle("The " + slimeInfo.name)
+            .setColor(slimeInfo.color)
+            .setDescription(slimeInfo.info)
+            msg.channel.send(embed);
+        break;
         }
     }
 });
