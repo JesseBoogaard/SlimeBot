@@ -1,0 +1,12 @@
+[
+    {
+      "name": "Pink Slime",
+      "can_evolve": true,
+      "pref_food": "any"
+    },
+    {
+      "name": "Tabby Slime",
+      "can_evolve": true,
+      "pref_food": "meat"
+    }
+]
