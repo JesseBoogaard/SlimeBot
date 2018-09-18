@@ -2,11 +2,91 @@
     {
       "name": "Pink Slime",
       "can_evolve": true,
-      "pref_food": "any"
+      "pref_food": "any",
+      "class": "Docile",
+      "color": "0xFF69B4"
     },
     {
       "name": "Tabby Slime",
       "can_evolve": true,
-      "pref_food": "meat"
+      "pref_food": "meat",
+      "color": "0x7A7A7A"
+    },
+    {
+      "name": "Phosphor Slime",
+      "can_evolve": true,
+      "pref_food": "fruit",
+      "class": "Docile",
+      "color": "0x6E8BEA"
+    },
+    {
+      "name": "Honey Slime",
+      "can_evolve": true,
+      "pref_food": "fruit",
+      "class": "Docile",
+      "color": "0xEAC36E"
+    },
+    {
+      "name": "Quantum Slime",
+      "can_evolve": false,
+      "pref_food": "fruit",
+      "class": "Docile",
+      "color": "0xD6C82F"
+    },
+    {
+      "name": "Tangle Slime",
+      "can_evolve": true,
+      "pref_food": "fruit",
+      "class": "Docile",
+      "color": "0x2CB798"
+    },
+    {
+      "name": "Dervish Slime",
+      "can_evolve": false,
+      "pref_food": "fruit",
+      "class": "Docile",
+      "color": "0x775B9B"
+    },
+    {
+      "name": "Hunter Slime",
+      "can_evolve": false,
+      "pref_food": "meat",
+      "class": "Docile",
+      "color": "0x633C34"
+    },
+    {
+      "name": "Rock Slime",
+      "can_evolve": false,
+      "pref_food": "vegetable",
+      "class": "Harmful",
+      "color": "0x185CBC"
+    },
+    {
+      "name": "Boom Slime",
+      "can_evolve": false,
+      "pref_food": "meat",
+      "class": "Harmful",
+      "color": "0x9E0109"
+    },
+    {
+      "name": "Rad Slime",
+      "can_evolve": false,
+      "pref_food": "meat",
+      "class": "Harmful",
+      "color": "0x0FAA01"
+    },
+    {
+      "name": "Crystal Slime",
+      "can_evolve": false,
+      "pref_food": "meat",
+      "class": "Harmful",
+      "color": "0x8458F4"
+    },
+    {
+      "name": "Mosaic Slime",
+      "can_evolve": false,
+      "pref_food": "meat",
+      "class": "Harmful",
+      "color": "0x3C99FC"
     }
 ]

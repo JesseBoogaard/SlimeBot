@@ -28,9 +28,10 @@ client.on('message', msg => {
             let ns = availableSlimes[rk]
             embed
             .setTitle("Congrats! You found a " + ns.name)
-            .setColor(0xFFFF00)
+            .setColor(ns.color)
             .setDescription("A beautiful " + ns.name + " was added to your ranch! \n Go feed it!")
             msg.channel.send(embed)
+        break;
         }
     }
 });
