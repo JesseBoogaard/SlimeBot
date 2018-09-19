@@ -42,11 +42,13 @@ client.on('message', msg => {
             for(let i = 0; i < Object.keys(food).length; i++){
                 foods.push(food[i].name);
             }
-            embed
-            .setTitle("Available foods are the following")
-            .setColor(0xE05E6B)
-            .setDescription(foods.join(",\n"));
-            msg.channel.send(embed);
+            msg.channel.send({
+                "embed": {
+                    title: "Available foods are the following",
+                    color: 0xE05E6B,
+                    description: foods.join(",\n")
+                }
+            });
         break;
 
         case 'info':
@@ -57,9 +59,10 @@ client.on('message', msg => {
                 }
             }
             embed
-            .setTitle("The " + requestedSlime.name)
-            .setColor(requestedSlime.color)
-            .setDescription(requestedSlime.info)
+                .setTitle("The " + requestedSlime.name)
+                .setColor(requestedSlime.color)
+                .setDescription(requestedSlime.info)
+                .setThumbnail("https://vignette.wikia.nocookie.net/slimerancher/images/6/6c/Pink_Slime_SP.png/revision/latest/scale-to-width-down/1000?cb=20170401125704");
             msg.channel.send(embed);
         break;
         }
