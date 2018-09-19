@@ -67,34 +67,39 @@
       "can_evolve": false,
       "pref_food": "vegetable",
       "class": "Harmful",
-      "color": "0x185CBC"
+      "color": "0x185CBC",
+      "info": "The Rock Slime is one of the most common slimes in Slime Rancher, tied with the Tabby Slime, both second only to the Pink Slime. \n\n Rock slimes earned their name from the rocky crown of sharp spikes atop their slimy bodies. But their affection for minerals doesn't end with their appearance: rock slimes are strict vegetarians, favoring the satisfying crunch of the heart beet most of all. \n The dangers of a rock slime should be fairly obvious: their rocky crown is sharp enough to pierce straight through a rancher's boots. But it's not all about watching where you're stepping as these rocks are always rolling. When you see a rock slime revving up for a tumble, it's best to get out of the way."
     },
     {
       "name": "Boom Slime",
       "can_evolve": false,
       "pref_food": "meat",
       "class": "Harmful",
-      "color": "0x9E0109"
+      "color": "0x9E0109",
+      "info": "Boom Slimes are often heard before they're seen. The slime cells of a boom slime are constantly vibrating, causing their slime to increasingly crackle with energy before ultimately exploding. However, the boom slime always comes out unscathed, though always a little dazed. \n\n Boom slimes are constantly building toward an inevitable explosion, making them quite hazardous to ranchers. In addition to those explosions causing bodily harm, they also have the capacity to send all nearby slimes flying into the air, making them a hard slime to corral. To prevent them from exploding as often in corrals, you can purchase a music box to calm them down."
     },
     {
       "name": "Rad Slime",
       "can_evolve": false,
       "pref_food": "meat",
       "class": "Harmful",
-      "color": "0x0FAA01"
+      "color": "0x0FAA01",
+      "info": "It's unknown if rad slimes, sometimes called 'raddies,' came to be from external radiation sources or from something naturally occurring within the The Far, Far Range. Regardless, rad slimes emit such a potent aura of radiation they glow in the dark! \n\n A rad slime's radioactive aura can induce rad poisoning to a rancher if they remain within it for too long. Ranchers are advised to monitor their rad exposure levels when handling these green globs of gamma goo as extended exposure can cause serious bodily harm, or worse."
     },
     {
       "name": "Crystal Slime",
       "can_evolve": false,
       "pref_food": "meat",
       "class": "Harmful",
-      "color": "0x8458F4"
+      "color": "0x8458F4",
+      "info": "Crystal Slimes are slimes that create sharp spikes on the ground for a minute or until dispersed with water. \n\n Believed to be a cousin of the rock slime, the crystal slime is covered in a crown of shimmering, crystal spikes. These spikes seem to form from the crystal slime generating a tremendous amount of internal heat and warping the minerals around them; a truly alien behavior. \n The sharp crystals adorned on the crystal slime's crown will cause a great deal of harm if touched. Worse still, the crystal slime routinely creates large patches of dangerous crystals in the environment around them."
     },
     {
       "name": "Mosaic Slime",
       "can_evolve": false,
       "pref_food": "meat",
       "class": "Harmful",
-      "color": "0x3C99FC"
+      "color": "0x3C99FC",
+      "info": "Mosaic Slimes are Slimes that have a glass-like shell that periodically creates hot glints of light similar to the ones produced in solar anomalies. \n\n The mosaic slime gets its name from the glittering array of glass tiles that cover its body. This glass produces a similar anomaly found in the desert itself, making the mosaic slime beautiful, but quite dangerous. \n\n Mosaic slimes can be very dangerous for an unprepared rancher. Their glass tiles create a shimmering effect in daylight that attracts other slimes to them. It is unknown why slimes exhibit this behaviour exactly, but leading theories indicate that 'sparkly things are super cool'."
     }
 ]
