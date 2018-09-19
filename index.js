@@ -3,6 +3,7 @@ const Discord = require('discord.js');
 const {RichEmbed, Client} = require('discord.js');
 const availableSlimes = require('./Data/Slimes.json');
 const food = require('./Data/Foods.json');
+require('dotenv').config();
 
 const client = new Discord.Client();
 const embed = new RichEmbed();
@@ -49,20 +50,20 @@ client.on('message', msg => {
         break;
 
         case 'info':
-            let slimeInfo;
+            let requestedSlime;
             for(let i = 0; i < Object.keys(availableSlimes).length; i++){
                 if(availableSlimes[i].name.toLowerCase() == args.join(" ").toLowerCase()){
-                    slimeInfo = availableSlimes[i]
+                    requestedSlime = availableSlimes[i]
                 }
             }
             embed
-            .setTitle("The " + slimeInfo.name)
-            .setColor(slimeInfo.color)
-            .setDescription(slimeInfo.info)
+            .setTitle("The " + requestedSlime.name)
+            .setColor(requestedSlime.color)
+            .setDescription(requestedSlime.info)
             msg.channel.send(embed);
         break;
         }
     }
 });
 
-client.login('NDc5NzM0MTI1OTc3NDAzNDIy.DoKbbw.bAzLqjlhlpa045KkCsKOhRgJIf4');
+client.login(process.env.TOKEN);
