@@ -5,55 +5,62 @@
       "pref_food": "any",
       "class": "Docile",
       "color": "0xFF69B4",
-      "info": "Pink Slimes are the most common slimes found in Slime Rancher. \n\n Their most notable trait unique to them is that they can eat all foods from the three main food types; Fruit, Meat, and Veggies. \n\n This makes them the easiest Slime to ranch in the game. As a tradeoff, they do not have a favorite food."
+      "info": "Pink Slimes are the most common slimes found in Slime Rancher. \n\n Their most notable trait unique to them is that they can eat all foods from  the three main food types; Fruit, Meat, and Veggies. \n\n This makes them the easiest Slime to ranch in the game. As a tradeoff, they do not have a favorite food."
     },
     {
       "name": "Tabby Slime",
       "can_evolve": true,
       "pref_food": "meat",
-      "color": "0x7A7A7A"
+      "color": "0x7A7A7A",
+      "info": "Tabby Slimes, or Tabbies for short, are one of the most common slimes in Slime Rancher, along with the Rock Slime, both second only to the Pink Slime. \n\n Tabby slimes share many curious similarities to domesticated house cats of Earth. With their perky ears, striped backs, and swaying tails, you'd almost mistake them for a true feline... \n If they weren't made entirely of gooey slime, of course. \n A Tabby slime generally doesn't mean any harm to a rancher, but like their spiritual Earth cat cousins, often causes a great deal of chaos anyway. Tabby slimes love to steal things they don't eat, like fruits and veggies, resulting in lots of unintended largo transformations on the Range."
     },
     {
       "name": "Phosphor Slime",
       "can_evolve": true,
       "pref_food": "fruit",
       "class": "Docile",
-      "color": "0x6E8BEA"
+      "color": "0x6E8BEA",
+      "info": "The Phosphor Slime is a nocturnal slime easily identified by its violet coloration, wings, and soft bright glow. \n\n It is one of the most common slimes found at night, but does not spawn during the day. \n\n Phosphor slimes have special needs compared to your typical slime. A phosphor slime and its plorts will quickly vanish if exposed to sunlight. Keep them safe!"
     },
     {
       "name": "Honey Slime",
       "can_evolve": true,
       "pref_food": "fruit",
       "class": "Docile",
-      "color": "0xEAC36E"
+      "color": "0xEAC36E",
+      "info": "Honey Slimes are uncommon slimes that can be easily identified by their golden-brown coloration, and the three-hexagon crest on their foreheads. \n\n The greatest danger a honey slime possesses is found in their plorts. Honey plorts are by far the sweetest, most delicious plorts known on the Far, Far Range. \n Other slimes can detect them from much further away than a normal plort and will do everything in their means to get it, so it is recommended to keep them away from other slimes. A rancher with honey slimes needs to be careful about unintended largos, or worse..."
     },
     {
       "name": "Quantum Slime",
       "can_evolve": false,
       "pref_food": "fruit",
       "class": "Docile",
-      "color": "0xD6C82F"
+      "color": "0xD6C82F",
+      "info": "Quantum Slimes appear to have resulted from some sort of event that took place in the Ancient Ruins long ago. \n At all times, the quantum slime is capable of emitting other possible realities of their being. Called 'ghosts', these other realities can come true, with the quantum slime aligning with the reality of the ghost, effectively teleporting."
     },
     {
       "name": "Tangle Slime",
       "can_evolve": true,
       "pref_food": "fruit",
       "class": "Docile",
-      "color": "0x2CB798"
+      "color": "0x2CB798",
+      "info": "Tangle Slimes are Slimes with flowers on their heads that are capable of utilizing vines to reach food and plorts a small distance away from them to feed themselves, and can produce pollen when agitated. \n\n Though the tangle slime may look innocent with its wide smile and colorful flower atop its head, it's actually a fearsome predator with a big appetite for tasty meat. The tangle slime earned its name from the twisting vines that it can produce to grab things in the environment."
     },
     {
       "name": "Dervish Slime",
       "can_evolve": false,
       "pref_food": "fruit",
       "class": "Docile",
-      "color": "0x775B9B"
+      "color": "0x775B9B,",
+      "info": "Dervish Slimes are Slimes which have a ring surrounding their body which are capable of producing cyclones when agitated. \n\n Dervish slimes can cause total chaos on a ranch if not cared for properly. In addition to frequently riding atop whirlwinds at high speed and collecting objects along the way, a highly agitated dervish slime can produce giant cyclones of air that vacuum up and toss about anything they touch."
     },
     {
       "name": "Hunter Slime",
       "can_evolve": false,
       "pref_food": "meat",
       "class": "Docile",
-      "color": "0x633C34"
+      "color": "0x633C34",
+      "info": "The Hunter Slime is the wild cousin of the Tabby Slime. A much more capable creature than the playful tabbies, the hunter slime excels at stalking the chickens of the Far, Far Range. \n\n A hunter slime's slimological makeup allows for a natural cloaking ability that renders it almost completely invisible. Their only tell is in their giant, almond eyes, which can often be seen hovering in the dark. This effect is often described by unsuspecting ranchers as 'aaaahhhhHHHH!'"
     },
     {
       "name": "Rock Slime",
