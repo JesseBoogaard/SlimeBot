@@ -58,11 +58,12 @@ client.on('message', msg => {
                     requestedSlime = availableSlimes[i]
                 }
             }
+            let url = "http://www.jesseboogaard.com/botimg/" + requestedSlime.img + ".png"
             embed
                 .setTitle("The " + requestedSlime.name)
                 .setColor(requestedSlime.color)
                 .setDescription(requestedSlime.info)
-                .setThumbnail("https://vignette.wikia.nocookie.net/slimerancher/images/6/6c/Pink_Slime_SP.png/revision/latest/scale-to-width-down/1000?cb=20170401125704");
+                .setThumbnail(url);
             msg.channel.send(embed);
         break;
         }
