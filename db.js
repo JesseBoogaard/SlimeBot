@@ -15,11 +15,19 @@ class SlimeDB{
     console.log(ID)
   }
 
+  doesRanchExist(ID){
+    let sql = `SELECT ID FROM ranches WHERE ID = ${ID}`
+    this.db.each(sql, (err) => {
+      if(err){throw err;}
+      return true;
+    })
+  }
+
   getRanchInfo(ID){
     let sql = `SELECT * FROM ranches WHERE ID = ${ID} `
     this.db.each(sql, (err, row) => {
       if(err){throw err;}
-      console.log(row.ID, row.ranchName);
+      console.log(row.ranchName);
     })
   }
 }

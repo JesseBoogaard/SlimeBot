@@ -4,6 +4,7 @@ const {RichEmbed, Client} = require('discord.js');
 const availableSlimes = require('./Data/Slimes.json');
 const food = require('./Data/Foods.json');
 const SlimeDB = require('./db.js');
+const ranch = new SlimeDB();
 require('dotenv').config();
 
 const client = new Discord.Client();
@@ -21,22 +22,25 @@ client.on('message', msg => {
 
         switch(command){
         case 'start':
-            embed
-            .setTitle("Welcome! Let's start a new ranch!")
-            .setColor(0xFFFFFF)
-            .setDescription("Welcome to Slimerancher Discord edition! \n Let's start with a nice name for your awesome new ranch! \n\n Type '!s nameranch [name_of_your_ranch]' and press enter")
-            msg.channel.send(embed);
+            if(ranch.doesRanchExist(msg.guild.id) == false){
+                embed
+                .setTitle("Welcome! Let's start a new ranch!")
+                .setColor(0xFFFFFF)
+                .setDescription("Welcome to Slimerancher Discord edition! \n Let's start with a nice name for your awesome new ranch! \n\n Type '!s nameranch [name_of_your_ranch]' and press enter")
+                msg.channel.send(embed);
+            }else{
+                console.log(ranch.getRanchInfo(msg.guild.id))
+                msg.channel.send("There's already a lovely ranch for this server called " + "! \n go pet your slimes :)");
+            }
         break;
 
         case 'nameranch':
-            let ranch = new SlimeDB();
             let ranchName = args.join(" ")
             ranch.addRanchToDB(ranchName, msg.guild.id)
         break;
 
-        case 'ranchinfo':
-            let ranch = new SlimeDB();
-            let ranchName = args.join(" ")
+        case 'summary':
+            //let ranchName = args.join(" ")
             ranch.getRanchInfo(msg.guild.id)
         break;
 
