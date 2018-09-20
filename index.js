@@ -3,6 +3,7 @@ const Discord = require('discord.js');
 const {RichEmbed, Client} = require('discord.js');
 const availableSlimes = require('./Data/Slimes.json');
 const food = require('./Data/Foods.json');
+const SlimeDB = require('./db.js');
 require('dotenv').config();
 
 const client = new Discord.Client();
@@ -23,8 +24,20 @@ client.on('message', msg => {
             embed
             .setTitle("Welcome! Let's start a new ranch!")
             .setColor(0xFFFFFF)
-            .setDescription("Welcome to Slimerancher Discord edition! \n Let's start with a nice name for your awesome new ranch!")
+            .setDescription("Welcome to Slimerancher Discord edition! \n Let's start with a nice name for your awesome new ranch! \n\n Type '!s nameranch [name_of_your_ranch]' and press enter")
             msg.channel.send(embed);
+        break;
+
+        case 'nameranch':
+            let ranch = new SlimeDB();
+            let ranchName = args.join(" ")
+            ranch.addRanchToDB(ranchName, msg.guild.id)
+        break;
+
+        case 'ranchinfo':
+            let ranch = new SlimeDB();
+            let ranchName = args.join(" ")
+            ranch.getRanchInfo(msg.guild.id)
         break;
 
         case 'find':
