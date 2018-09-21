@@ -26,11 +26,11 @@ client.on('message', msg => {
                 embed
                 .setTitle("Welcome! Let's start a new ranch!")
                 .setColor(0xFFFFFF)
-                .setDescription("Welcome to Slimerancher Discord edition! \n Let's start with a nice name for your awesome new ranch! \n\n Type '!s nameranch [name_of_your_ranch]' and press enter")
+                .setDescription("Welcome to Slimerancher Discord edition! \n Let's start with a nice name for your awesome new ranch! \n\n Type `!s nameranch [name_of_your_ranch]` and press enter")
                 msg.channel.send(embed);
             }else{
                 console.log(ranch.getRanchInfo(msg.guild.id))
-                msg.channel.send("There's already a lovely ranch for this server called " + "! \n go pet your slimes :)");
+                msg.channel.send("There's already a lovely ranch for this server! Go pet your slimes :) \n\n Want to start over? type `!s resetranch` then `!s start` to start a new one :)");
             }
         break;
 
@@ -39,8 +39,11 @@ client.on('message', msg => {
             ranch.addRanchToDB(ranchName, msg.guild.id)
         break;
 
+        case 'resetranch':
+            ranch.resetRanch(msg.guild.id)
+        break;
+
         case 'summary':
-            //let ranchName = args.join(" ")
             ranch.getRanchInfo(msg.guild.id)
         break;
 
@@ -75,7 +78,7 @@ client.on('message', msg => {
                     requestedSlime = availableSlimes[i]
                 }
             }
-            let url = "http://www.jesseboogaard.com/botimg/" + requestedSlime.img + ".png"
+            let url = "http://www.slimebot.tech/botimg/" + requestedSlime.img + ".png"
             embed
                 .setTitle("The " + requestedSlime.name)
                 .setColor(requestedSlime.color)
