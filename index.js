@@ -62,9 +62,16 @@ client.on('message', msg => {
             embed
             .setTitle("Congrats! You found a " + newSlime.name)
             .setColor(newSlime.color)
-            .setDescription("A beautiful " + newSlime.name + " was added to your ranch! \n Go feed it!")
-            msg.channel.send(embed)
-        break;
+            .setDescription("Welcome this **adorable** " + newSlime.name + " to your ranch! \n\n For more info about this cutie type `!s info " + newSlime.name + "` \n Now go pet this slimy boi!");
+            return new Promise((fulfill, reject) => {
+                ranch.registerNewSlime(newSlime.id, msg.guild.id).then((res) => {
+                    if(res){
+                        fulfill(msg.channel.send(embed));
+                    }else{
+                        fulfill("Something went wrong adding this cutie to your ranch :( Better luck next time");
+                    }
+                }, reject);
+            })
 
         case 'foods':
             let foods = [];
