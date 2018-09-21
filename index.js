@@ -22,16 +22,19 @@ client.on('message', msg => {
 
         switch(command){
         case 'start':
-            if(ranch.doesRanchExist(msg.guild.id) == false){
-                embed
-                .setTitle("Welcome! Let's start a new ranch!")
-                .setColor(0xFFFFFF)
-                .setDescription("Welcome to Slimerancher Discord edition! \n Let's start with a nice name for your awesome new ranch! \n\n Type `!s nameranch [name_of_your_ranch]` and press enter")
-                msg.channel.send(embed);
-            }else{
-                console.log(ranch.getRanchInfo(msg.guild.id))
-                msg.channel.send("There's already a lovely ranch for this server! Go pet your slimes :) \n\n Want to start over? type `!s resetranch` then `!s start` to start a new one :)");
-            }
+            return new Promise((fulfill, reject) => {
+                ranch.doesRanchExist(msg.guild.id).then((res) => {
+                    if(res == true){
+                        fulfill(msg.channel.send("There's already a lovely ranch for this server! Go pet your slimes :) \n\n Want to start over? type `!s resetranch` then `!s start` to start a new one :)"));
+                    }else if(res == false){
+                        embed
+                        .setTitle("Welcome! Let's start a new ranch!")
+                        .setColor(0xFFFFFF)
+                        .setDescription("Welcome to Slimerancher Discord edition! \n Let's start with a nice name for your awesome new ranch! \n\n Type `!s nameranch [name_of_your_ranch]` and press enter")
+                        fulfill(msg.channel.send(embed));
+                    }
+                }, reject)
+            });
         break;
 
         case 'nameranch':
