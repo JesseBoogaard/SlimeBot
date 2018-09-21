@@ -83,10 +83,10 @@ client.on('message', msg => {
             }
             let url = "http://www.slimebot.tech/botimg/" + requestedSlime.img + ".png"
             embed
-                .setTitle("The " + requestedSlime.name)
-                .setColor(requestedSlime.color)
-                .setDescription(requestedSlime.info)
-                .setThumbnail(url);
+            .setTitle("The " + requestedSlime.name)
+            .setColor(requestedSlime.color)
+            .setDescription(requestedSlime.info)
+            .setThumbnail(url);
             msg.channel.send(embed);
         break;
         }
