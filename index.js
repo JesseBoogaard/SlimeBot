@@ -35,12 +35,18 @@ client.on('message', msg => {
                     }
                 }, reject)
             });
-        break;
 
         case 'nameranch':
-            let ranchName = args.join(" ")
-            ranch.addRanchToDB(ranchName, msg.guild.id)
-        break;
+            return new Promise((fulfill, reject) => {
+                let ranchName = args.join(" ")
+                ranch.addRanchToDB(ranchName, msg.guild.id).then((res) => {
+                    if(res){
+                        fulfill(msg.channel.send("**Congrats!** You're now a real slime rancher, and proud owner of *" + ranchName + "!* \n Good luck out there :) \n ps. you got some starting cash to buy some food ;)"));
+                    }else{
+                        fulfill(msg.channel.send("Sadly something went wrong while creating your beautiful ranch :( \n try again in a bit, please!"));
+                    }
+                }, reject)
+            })
 
         case 'resetranch':
             ranch.resetRanch(msg.guild.id)

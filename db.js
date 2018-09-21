@@ -9,8 +9,17 @@ class SlimeDB{
     }
 
     addRanchToDB(ranchName, ID){
-        console.log(ranchName)
-        console.log(ID)
+        return new Promise((fulfill, reject) => {
+            let cash = 1000;
+            let sql = `INSERT INTO ranches (ID, ranchName, money) VALUES (${ID}, "${ranchName}", ${cash})`
+            this.db.run(sql, (err) => {
+                if(err){
+                    reject(err);
+                }else{
+                    fulfill(true);
+                }
+            })
+        })
     }
 
     doesRanchExist(ID){
