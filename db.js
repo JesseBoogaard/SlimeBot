@@ -44,7 +44,7 @@ class SlimeDB{
                     fulfill(this._addSlime(slimeID, serverID));
                 }else if(res != undefined){
                     return new Promise((fulfill, reject) => {
-                        let sql = `INSERT INTO slimes (ID, server, amount) VALUES (${slimeID}, ${serverID}, 1)`;
+                        let sql = `INSERT INTO slimes (slimeID, ranchID, amount) VALUES (${slimeID}, ${serverID}, 1)`;
                         this.db.run(sql, (err) => {
                             if(err){
                                 reject(err);
@@ -58,9 +58,24 @@ class SlimeDB{
         })
     }
 
+    
+    getRanchInfo(ID){
+        return new Promise((fulfill, reject) => {
+            let sql = `SELECT * FROM ranches, slimes WHERE ID = ${ID}`
+            this.db.each(sql, (err, row) => {
+                if(err){
+                    reject(err);
+                }else{
+                    console.log(row);
+                    fulfill(row);
+                }
+            })
+        })
+    }
+
     _slimeInRanch(slimeID, serverID){
         return new Promise((fulfill, reject) => {
-            let sql = `SELECT * FROM slimes WHERE ID = ${slimeID} AND server = ${serverID}`;
+            let sql = `SELECT * FROM slimes WHERE slimeID = ${slimeID} AND ranchID = ${serverID}`;
             this.db.get(sql, (err, result) => {
                 if(err){
                     reject(err);
@@ -72,10 +87,10 @@ class SlimeDB{
             })
         })
     }
-    
+
     _addSlime(slimeID, serverID){
         return new Promise((fulfill, reject) => {
-            let sql = `UPDATE slimes SET amount = amount + 1 WHERE server = ${serverID} AND ID = ${slimeID}`;
+            let sql = `UPDATE slimes SET amount = amount + 1 WHERE ranchID = ${serverID} AND slimeID = ${slimeID}`;
             this.db.run(sql, (err) => {
                 if(err){
                     reject(err);
@@ -83,14 +98,6 @@ class SlimeDB{
                     fulfill(true);
                 }
             })
-        })
-    }
-
-    getRanchInfo(ID){
-        let sql = `SELECT * FROM ranches WHERE ID = ${ID}`
-        this.db.each(sql, (err, row) => {
-            if(err){throw err;}
-            console.log(row.ranchName);
         })
     }
 }

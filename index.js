@@ -52,9 +52,20 @@ client.on('message', msg => {
             ranch.resetRanch(msg.guild.id)
         break;
 
-        case 'summary':
-            ranch.getRanchInfo(msg.guild.id)
-        break;
+        case 'ranch':
+            return new Promise((fulfill, reject) => {
+                ranch.getRanchInfo(msg.guild.id).then((res) => {
+                    if(res){
+                        embed
+                        .setTitle("Here's a summary of " + res.ranchName)
+                        .setColor(0x42372D)
+                        .setDescription("ranch stuff here");
+                        fulfill(msg.channel.send(embed));
+                    }else{
+                        fulfill(msg.channel.send("Couldn't get ranch info at this time. Try again later ;)"));
+                    }
+                }, reject)
+            })
 
         case 'find':
             let randomKey = Object.keys(availableSlimes)[Math.floor(Math.random() * Object.keys(availableSlimes).length)]
