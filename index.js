@@ -59,7 +59,7 @@ client.on('message', msg => {
                         embed
                         .setTitle("Here's a summary of " + res.ranchName)
                         .setColor(0x42372D)
-                        .setDescription("ranch stuff here");
+                        .setDescription();
                         fulfill(msg.channel.send(embed));
                     }else{
                         fulfill(msg.channel.send("Couldn't get ranch info at this time. Try again later ;)"));

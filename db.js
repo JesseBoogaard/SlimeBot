@@ -61,13 +61,14 @@ class SlimeDB{
     
     getRanchInfo(ID){
         return new Promise((fulfill, reject) => {
-            let sql = `SELECT * FROM ranches, slimes WHERE ID = ${ID}`
+            let result = [];
+            let sql = `SELECT slimeID, amount FROM slimes WHERE ranchID = ${ID}`
             this.db.each(sql, (err, row) => {
                 if(err){
                     reject(err);
                 }else{
-                    console.log(row);
-                    fulfill(row);
+                    result.push(row);
+                    fulfill(result);
                 }
             })
         })
