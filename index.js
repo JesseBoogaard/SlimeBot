@@ -4,7 +4,9 @@ const {RichEmbed, Client} = require('discord.js');
 const availableSlimes = require('./Data/Slimes.json');
 const food = require('./Data/Foods.json');
 const SlimeDB = require('./db.js');
+const Functions = require('./functions.js');
 const ranch = new SlimeDB();
+const fn = new Functions();
 require('dotenv').config();
 
 const client = new Discord.Client();
@@ -56,6 +58,7 @@ client.on('message', msg => {
             return new Promise((fulfill, reject) => {
                 ranch.getRanchInfo(msg.guild.id).then((res) => {
                     if(res){
+                        fn.getSlimeInfoByID(res);
                         embed
                         .setTitle("Here's a summary of " + res.ranchName)
                         .setColor(0x42372D)
