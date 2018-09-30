@@ -6,15 +6,12 @@ class Functions{
     }
 
     getSlimeInfoByID(results){
+        let slimeInfo = [];
         return new Promise((fulfill, reject) => {
-            let res = [];
-            this.res = res;
-            for(let i = 0; i < slimes.length; i++){
-                if(slimes[i].id == results.id){
-                    this.res.push(slimes[i].name + results.slimeID);
-                }
+            for(let i = 0; i < results.length; i++){
+                slimeInfo.push({ "name": slimes.filter(slime => slime.id == results[i].slimeID)[0].name, "amount": results[i].amount })
             }
-            fulfill(res);
+            fulfill(slimeInfo);
         })
     }
 

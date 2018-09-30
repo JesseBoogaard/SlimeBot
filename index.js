@@ -58,12 +58,18 @@ client.on('message', msg => {
             return new Promise((fulfill, reject) => {
                 ranch.getRanchInfo(msg.guild.id).then((res) => {
                     if(res){
-                        fn.getSlimeInfoByID(res);
-                        embed
-                        .setTitle("Here's a summary of " + res.ranchName)
-                        .setColor(0x42372D)
-                        .setDescription();
-                        fulfill(msg.channel.send(embed));
+                        console.log(res);
+                        let str = "**Slimes:** \n\n";
+                        fn.getSlimeInfoByID(res).then((result) => {
+                            result.forEach((slime) => {
+                                str = str + slime.name + "s: "+ slime.amount + " \n";
+                            })
+                            embed
+                            .setTitle("Here's a summary of your lovely ranch!")
+                            .setColor(0x42372D)
+                            .setDescription(str);
+                            fulfill(msg.channel.send(embed));
+                        });
                     }else{
                         fulfill(msg.channel.send("Couldn't get ranch info at this time. Try again later ;)"));
                     }
@@ -94,7 +100,21 @@ client.on('message', msg => {
             }
             msg.channel.send({
                 "embed": {
-                    title: "Available foods are the following",
+                    title: "Available foods are the following (feeding system = work in progress)",
+                    color: 0xE05E6B,
+                    description: foods.join(",\n")
+                }
+            });
+        break;
+
+        case 'collect':
+            let foods = [];
+            for(let i = 0; i < Object.keys(food).length; i++){
+                foods.push(food[i].name);
+            }
+            msg.channel.send({
+                "embed": {
+                    title: "Available foods are the following (feeding system = work in progress)",
                     color: 0xE05E6B,
                     description: foods.join(",\n")
                 }
