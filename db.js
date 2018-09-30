@@ -37,6 +37,21 @@ class SlimeDB{
         })
     }
 
+    feedFoodToSlime(foodName, ID){
+        return new Promise((fulfill, reject) => {
+            console.log(foodName);
+            let sql = `SELECT * FROM foods WHERE foodName = ${foodName} AND ranchID = ${ID}`;
+            this.db.get(sql, (err, result) => {
+                if(err){
+                    reject(err);
+                }else{
+                    console.log(result);
+                    fulfill(result);
+                }
+            })
+        })
+    }
+
     registerNewSlime(slimeID, serverID){
         return new Promise((fulfill, reject) => {
             this._slimeInRanch(slimeID, serverID).then((res) =>{

@@ -12,6 +12,7 @@ require('dotenv').config();
 const client = new Discord.Client();
 const embed = new RichEmbed();
 const prefix = "!s";
+let selectedSlime;
 
 client.on('ready', () => {
     client.user.setActivity('in green pastures!', {type: 'PLAYING'});
@@ -82,11 +83,12 @@ client.on('message', msg => {
             embed
             .setTitle("Congrats! You found a " + newSlime.name)
             .setColor(newSlime.color)
+            .setThumbnail("attachment://" + newSlime.img + ".png")
             .setDescription("Welcome this **adorable** " + newSlime.name + " to your ranch! \n\n For more info about this cutie type `!s info " + newSlime.name + "` \n Now go pet this slimy boi!");
             return new Promise((fulfill, reject) => {
                 ranch.registerNewSlime(newSlime.id, msg.guild.id).then((res) => {
                     if(res){
-                        fulfill(msg.channel.send(embed));
+                        fulfill(msg.channel.send({ embed, files: [{ attachment: "Data/img/" + newSlime.img + ".png", name: newSlime.img + ".png" }] }));
                     }else{
                         fulfill("Something went wrong adding this cutie to your ranch :( Better luck next time");
                     }
@@ -106,6 +108,23 @@ client.on('message', msg => {
                 }
             });
         break;
+
+        case 'select':
+            let slimeToSelect = args.join(" ");
+            ranch.selectSlime(slimeToSelect)
+        break;
+
+        // case 'feed':
+        //     let foodName = args.join(" ");
+        //     ranch.feedFoodToSlime(foodName);
+        //     // msg.channel.send({
+        //     //     "embed": {
+        //     //         title: "Available foods are the following (feeding system = work in progress)",
+        //     //         color: 0xE05E6B,
+        //     //         description: foods.join(",\n")
+        //     //     }
+        //     // });
+        // break;
 
         case 'info':
             let requestedSlime;
