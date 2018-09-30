@@ -107,20 +107,6 @@ client.on('message', msg => {
             });
         break;
 
-        case 'collect':
-            let foods = [];
-            for(let i = 0; i < Object.keys(food).length; i++){
-                foods.push(food[i].name);
-            }
-            msg.channel.send({
-                "embed": {
-                    title: "Available foods are the following (feeding system = work in progress)",
-                    color: 0xE05E6B,
-                    description: foods.join(",\n")
-                }
-            });
-        break;
-
         case 'info':
             let requestedSlime;
             for(let i = 0; i < Object.keys(availableSlimes).length; i++){
@@ -128,13 +114,13 @@ client.on('message', msg => {
                     requestedSlime = availableSlimes[i]
                 }
             }
-            let url = "http://www.slimebot.tech/botimg/" + requestedSlime.img + ".png"
+            let url = "attachment://" + requestedSlime.img + ".png"
             embed
             .setTitle("The " + requestedSlime.name)
             .setColor(requestedSlime.color)
             .setDescription(requestedSlime.info)
             .setThumbnail(url);
-            msg.channel.send(embed);
+            msg.channel.send({ embed, files: [{ attachment: "Data/img/" + requestedSlime.img + ".png", name: requestedSlime.img + ".png" }] });
         break;
         }
     }
