@@ -1,40 +1,40 @@
 const sqlite3 = require('sqlite3').verbose();
-
+const admin = require("firebase-admin");
+let db;
+require('dotenv').config();
 class SlimeDB{
     constructor(){
-        this.db = new sqlite3.Database("./database/sqlite.db", sqlite3.OPEN_READWRITE, (err) => {
-            if(err) return console.error(err.message);
-            console.log('Connected to DB successfully');
-        })
+        let serviceAccount = require(process.env.SERVICEACCOUNT);
+        admin.initializeApp({
+            credential: admin.credential.cert(serviceAccount),
+            databaseURL: "https://slimebot-01.firebaseio.com"
+        });
+        db = admin.firestore();
+        console.log("connected to db");
     }
 
     doesRanchExist(ID){
         return new Promise((fulfill, reject) => {
-            let sql = `SELECT ID FROM ranches WHERE ID = ${ID}`
-            this.db.get(sql, (err, result) => {
-                if(err){
-                    reject(err);
-                }else if(result != undefined){
-                    fulfill(true)
-                }else{
+            db.collection('ranches').doc(ID).get().then((doc) => {
+                if(!doc.exists){
                     fulfill(false)
+                }else{
+                    fulfill(true)
                 }
             })
         })
     }
 
     addRanchToDB(ranchName, ID){
-        return new Promise((fulfill, reject) => {
             let cash = 1000;
-            let sql = `INSERT INTO ranches (ID, ranchName, money) VALUES (${ID}, "${ranchName}", ${cash})`;
-            this.db.run(sql, (err) => {
-                if(err){
-                    reject(err);
-                }else{
-                    fulfill(true);
-                }
-            })
-        })
+            var docRef = db.collection('ranches').doc(ID);
+            docRef.set({
+                money: cash,
+                ranchName: ranchName,
+                plorts: [],
+                slimes: [],
+                foods: []
+            });
     }
 
     feedFoodToSlime(foodName, ID){
