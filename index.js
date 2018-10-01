@@ -25,7 +25,7 @@ client.on('message', msg => {
         switch(command){
         case 'start':
             return new Promise((fulfill, reject) => {
-                ranch._doesRanchExist(msg.guild.id).then((res) => {
+                ranch.doesRanchExist(msg.guild.id).then((res) => {
                     if(res == true){
                         fulfill(msg.channel.send("There's already a lovely ranch for this server! Go pet your slimes :) \n\n Want to start over? type `!s resetranch` then `!s start` to start a new one :)"));
                     }else if(res == false){
@@ -86,8 +86,9 @@ client.on('message', msg => {
             .setColor(newSlime.color)
             .setThumbnail("attachment://" + newSlime.img + ".png")
             .setDescription("Welcome this **adorable** " + newSlime.name + " to your ranch! \n\n For more info about this cutie type `!s info " + newSlime.name + "` \n Now go pet this slimy boi!");
+
             return new Promise((fulfill, reject) => {
-                ranch.registerNewSlime(newSlime.id, msg.guild.id).then((res) => {
+                ranch.registerNewSlime(newSlime.name, msg.guild.id).then((res) => {
                     if(res){
                         fulfill(msg.channel.send({ embed, files: [{ attachment: "Data/img/" + newSlime.img + ".png", name: newSlime.img + ".png" }] }));
                     }else{
