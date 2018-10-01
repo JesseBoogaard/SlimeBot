@@ -1,6 +1,7 @@
 //imports
 const Discord = require('discord.js');
 const {RichEmbed, Client} = require('discord.js');
+const admin = require("firebase-admin");
 const availableSlimes = require('./Data/Slimes.json');
 const food = require('./Data/Foods.json');
 const SlimeDB = require('./db.js');
@@ -8,13 +9,17 @@ const Functions = require('./functions.js');
 const ranch = new SlimeDB();
 const fn = new Functions();
 require('dotenv').config();
-
 const client = new Discord.Client();
 const embed = new RichEmbed();
 const prefix = "!s";
 let selectedSlime;
+let serviceAccount = require(process.env.SERVICEACCOUNT);
 
 client.on('ready', () => {
+    admin.initializeApp({
+        credential: admin.credential.cert(serviceAccount),
+        databaseURL: "https://slimebot-01.firebaseio.com"
+      });
     client.user.setActivity('in green pastures!', {type: 'PLAYING'});
 });
 
@@ -110,21 +115,9 @@ client.on('message', msg => {
         break;
 
         case 'select':
-            let slimeToSelect = args.join(" ");
-            ranch.selectSlime(slimeToSelect)
+            // let slimeToSelect = args.join(" ");
+            // ranch.selectSlime(slimeToSelect)
         break;
-
-        // case 'feed':
-        //     let foodName = args.join(" ");
-        //     ranch.feedFoodToSlime(foodName);
-        //     // msg.channel.send({
-        //     //     "embed": {
-        //     //         title: "Available foods are the following (feeding system = work in progress)",
-        //     //         color: 0xE05E6B,
-        //     //         description: foods.join(",\n")
-        //     //     }
-        //     // });
-        // break;
 
         case 'info':
             let requestedSlime;
