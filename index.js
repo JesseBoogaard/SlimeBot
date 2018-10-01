@@ -25,7 +25,7 @@ client.on('message', msg => {
         switch(command){
         case 'start':
             return new Promise((fulfill, reject) => {
-                ranch.doesRanchExist(msg.guild.id).then((res) => {
+                ranch._doesRanchExist(msg.guild.id).then((res) => {
                     if(res == true){
                         fulfill(msg.channel.send("There's already a lovely ranch for this server! Go pet your slimes :) \n\n Want to start over? type `!s resetranch` then `!s start` to start a new one :)"));
                     }else if(res == false){
@@ -44,8 +44,10 @@ client.on('message', msg => {
                 ranch.addRanchToDB(ranchName, msg.guild.id).then((res) => {
                     if(res){
                         fulfill(msg.channel.send("**Congrats!** You're now a real slime rancher, and proud owner of *" + ranchName + "!* \n Good luck out there :) \n ps. you got some starting cash to buy some food ;)"));
+                    }else if(res == false){
+                        fulfill(msg.channel.send("There's already a ranch for this server, silly! Go pet your slimes ;)"));
                     }else{
-                        fulfill(msg.channel.send("Sadly something went wrong while creating your beautiful ranch :( \n try again in a bit, please!"));
+                        fulfill(msg.channel.send("Something went wrong while adding your ranch, please try again later :)"))
                     }
                 }, reject)
             })

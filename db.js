@@ -1,5 +1,6 @@
 const sqlite3 = require('sqlite3').verbose();
 const admin = require("firebase-admin");
+const startingCash = 1000;
 let db;
 require('dotenv').config();
 class SlimeDB{
@@ -13,28 +14,39 @@ class SlimeDB{
         console.log("connected to db");
     }
 
-    doesRanchExist(ID){
+    _doesRanchExist(ID){
         return new Promise((fulfill, reject) => {
             db.collection('ranches').doc(ID).get().then((doc) => {
                 if(!doc.exists){
                     fulfill(false)
-                }else{
+                }else if(doc.exists){
                     fulfill(true)
+                }else{
+                    reject(err);
                 }
             })
         })
     }
 
     addRanchToDB(ranchName, ID){
-            let cash = 1000;
-            var docRef = db.collection('ranches').doc(ID);
-            docRef.set({
-                money: cash,
-                ranchName: ranchName,
-                plorts: [],
-                slimes: [],
-                foods: []
-            });
+        return new Promise((fulfill, reject) => {
+            this._doesRanchExist(ID).then((res) => {
+                if(!res){
+                    db.collection('ranches').doc(ID)
+                    .set({
+                        money: startingCash,
+                        ranchName: ranchName,
+                        plorts: [],
+                        slimes: [],
+                        foods: []
+                    }).then(() => {
+                        fulfill(true);
+                    }, reject)
+                }else{
+                    fulfill(false)
+                };
+            })
+        })
     }
 
     feedFoodToSlime(foodName, ID){
