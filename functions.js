@@ -1,20 +1,30 @@
 const slimes = require('./Data/Slimes.json');
+const availableSlimes = require('./Data/Slimes.json');
 
 class Functions{
     constructor(){
 
     }
 
-    getSlimeInfoByID(results){
-        let slimeInfo = [];
+    getSlimeInfo(res){
         return new Promise((fulfill, reject) => {
-            for(let i = 0; i < results.length; i++){
-                slimeInfo.push({ "name": slimes.filter(slime => slime.id == results[i].slimeID)[0].name, "amount": results[i].amount })
-            }
-            fulfill(slimeInfo);
-        })
+            let str = "**Slimes:** \n\n";
+            res.forEach((slime) => {
+                str = str + slime.slimeName + "s: "+ slime.amount + " \n";
+            })
+            fulfill(str);
+        }, reject)
     }
 
+    getRandomSlime(){
+        console.log(1)
+        return new Promise((fulfill, reject) => {
+            console.log(2)
+            let randomKey = Object.keys(availableSlimes)[Math.floor(Math.random() * Object.keys(availableSlimes).length)]
+            let newSlime = availableSlimes[randomKey]
+            fulfill(newSlime);
+        })
+    }
 }
 
 module.exports = Functions;

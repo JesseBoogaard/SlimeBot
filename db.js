@@ -100,14 +100,13 @@ class SlimeDB{
         })
     }
 
-    getRanchInfo(ID){
+    getRanchInfo(serverID){
         return new Promise((fulfill, reject) => {
-            let sql = `SELECT * FROM slimes WHERE ranchID = ${ID}`
-            this.db.all(sql, (err, row) => {
-                if(err){
-                    reject(err);
+            db.collection('ranches').doc(serverID).get().then(doc => {
+                if(!doc.exists){
+                    fulfill(false)
                 }else{
-                    fulfill(row);
+                    fulfill(doc.data());
                 }
             })
         })

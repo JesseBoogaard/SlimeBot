@@ -1,7 +1,6 @@
 //imports
 const Discord = require('discord.js');
 const {RichEmbed, Client} = require('discord.js');
-const availableSlimes = require('./Data/Slimes.json');
 const food = require('./Data/Foods.json');
 const SlimeDB = require('./db.js');
 const Functions = require('./functions.js');
@@ -60,18 +59,14 @@ client.on('message', msg => {
             return new Promise((fulfill, reject) => {
                 ranch.getRanchInfo(msg.guild.id).then((res) => {
                     if(res){
-                        console.log(res);
-                        let str = "**Slimes:** \n\n";
-                        fn.getSlimeInfoByID(res).then((result) => {
-                            result.forEach((slime) => {
-                                str = str + slime.name + "s: "+ slime.amount + " \n";
-                            })
+                        let ranchName = res.ranchName
+                        fn.getSlimeInfo(res.slimes).then((res) => {
                             embed
-                            .setTitle("Here's a summary of your lovely ranch!")
+                            .setTitle("Here's a summary of " + ranchName)
                             .setColor(0x42372D)
-                            .setDescription(str);
+                            .setDescription(res);
                             fulfill(msg.channel.send(embed));
-                        });
+                        })
                     }else{
                         fulfill(msg.channel.send("Couldn't get ranch info at this time. Try again later ;)"));
                     }
@@ -79,14 +74,14 @@ client.on('message', msg => {
             })
 
         case 'find':
-            let randomKey = Object.keys(availableSlimes)[Math.floor(Math.random() * Object.keys(availableSlimes).length)]
-            let newSlime = availableSlimes[randomKey]
-            embed
-            .setTitle("Congrats! You found a " + newSlime.name)
-            .setColor(newSlime.color)
-            .setThumbnail("attachment://" + newSlime.img + ".png")
-            .setDescription("Welcome this **adorable** " + newSlime.name + " to your ranch! \n\n For more info about this cutie type `!s info " + newSlime.name + "` \n Now go pet this slimy boi!");
-
+            fn.getRandomSlime().then((res) => {
+                embed
+                .setTitle("Congrats! You found a " + res.name)
+                .setColor(res.color)
+                .setThumbnail("attachment://" + res.img + ".png")
+                .setDescription("Welcome this **adorable** " + res.name + " to your ranch! \n\n For more info about this cutie type `!s info " + res.name + "` \n Now go pet this slimy boi!");
+                ranch.registerNewSlime(res.name, msg.guild.id)
+            })
             return new Promise((fulfill, reject) => {
                 ranch.registerNewSlime(newSlime.name, msg.guild.id).then((res) => {
                     if(res){
