@@ -9,7 +9,7 @@ const fn = new Functions();
 require('dotenv').config();
 const client = new Discord.Client();
 const embed = new RichEmbed();
-const prefix = "!s";
+const prefix = "s!";
 let selectedSlime;
 
 client.on('ready', () => {
