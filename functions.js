@@ -30,9 +30,7 @@ class Functions{
             let randomKey = Object.keys(availableSlimes)[Math.floor(Math.random() * Object.keys(availableSlimes).length)]
             let newSlime = availableSlimes[randomKey]
             ranch.registerNewSlime(serverID, newSlime).then((res) => {
-                console.log(res)
                 if(res){
-                    console.log(newSlime)
                     fulfill(newSlime);
                 }
             })

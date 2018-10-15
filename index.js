@@ -73,7 +73,6 @@ client.on('message', msg => {
 
         case 'find':
             fn.getRandomSlime(msg.guild.id).then((res) => {
-                console.log(res)
                 embed
                 .setTitle("Congrats! You found a " + res.name)
                 .setColor(res.color)
