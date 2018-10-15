@@ -65,38 +65,23 @@ class SlimeDB{
         })
     }
 
-    registerNewSlime(slimeName, serverID){
+    registerNewSlime(serverID, newSlime) {
         return new Promise((fulfill, reject) => {
-            this._slimeInRanch(slimeName, serverID).then((res) =>{
-                if(res != []){
-                    fulfill(this._addSlime(res, serverID));
-                }else if(!res){
-                    return new Promise((fulfill, reject) => {
-
-                    })
-                }
-            }, reject)
-        })
-    }
-
-    _slimeInRanch(slimeName, serverID){
-        return new Promise((fulfill, reject) => {
-            db.collection('ranches').doc(serverID).get().then(doc => {
-                if(!doc.exists){
-                    fulfill(false);
-                }else{
-                    let slime = doc.data().slimes.filter(slime => slime.amount != 0 && slime.slimeName == slimeName.toLowerCase());
-                    if(slime != []){
-                        fulfill(slime);
+            db.collection('ranches').doc(serverID).get().then((doc) => {
+                if (doc.exists) {
+                    let oldDoc = doc.data()
+                    for(let slime in oldDoc.slimes) {
+                        if(oldDoc.slimes[slime].slimeName == (newSlime.name).toLowerCase()) {
+                            oldDoc.slimes[slime].amount += 1;
+                            let newDoc = oldDoc
+                            db.collection('ranches').doc(serverID).set(newDoc)
+                            fulfill(true)
+                        }
                     }
                 }
             }, reject)
-        })
-    }
-    
-    _addSlime(slimeData, serverID){
-        return new Promise((fulfill, reject) => {
-            fulfill(db.collection('ranches').doc(serverID).update({} ));
+        }).catch((err) => {
+            reject(err)
         })
     }
 
@@ -108,7 +93,7 @@ class SlimeDB{
                 }else{
                     fulfill(doc.data());
                 }
-            })
+            }, reject)
         })
     }
 }

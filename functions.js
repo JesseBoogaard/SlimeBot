@@ -1,4 +1,5 @@
-const slimes = require('./Data/Slimes.json');
+const SlimeDB = require('./db.js');
+const ranch = new SlimeDB();
 const availableSlimes = require('./Data/Slimes.json');
 
 class Functions{
@@ -13,16 +14,30 @@ class Functions{
                 str = str + slime.slimeName + "s: "+ slime.amount + " \n";
             })
             fulfill(str);
-        }, reject)
+        })
     }
 
-    getRandomSlime(){
-        console.log(1)
+    getRanchInfo(serverID){
         return new Promise((fulfill, reject) => {
-            console.log(2)
+            ranch.getRanchInfo(serverID).then((res) => {
+                fulfill(res)
+            }, reject)
+        })
+    }
+
+    getRandomSlime(serverID){
+        return new Promise((fulfill, reject) => {
             let randomKey = Object.keys(availableSlimes)[Math.floor(Math.random() * Object.keys(availableSlimes).length)]
             let newSlime = availableSlimes[randomKey]
-            fulfill(newSlime);
+            ranch.registerNewSlime(serverID, newSlime).then((res) => {
+                console.log(res)
+                if(res){
+                    console.log(newSlime)
+                    fulfill(newSlime);
+                }
+            })
+        }).catch((err) => {
+            reject(err)
         })
     }
 }

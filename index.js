@@ -2,9 +2,7 @@
 const Discord = require('discord.js');
 const {RichEmbed, Client} = require('discord.js');
 const food = require('./Data/Foods.json');
-const SlimeDB = require('./db.js');
 const Functions = require('./functions.js');
-const ranch = new SlimeDB();
 const fn = new Functions();
 require('dotenv').config();
 const client = new Discord.Client();
@@ -57,7 +55,7 @@ client.on('message', msg => {
 
         case 'ranch':
             return new Promise((fulfill, reject) => {
-                ranch.getRanchInfo(msg.guild.id).then((res) => {
+                fn.getRanchInfo(msg.guild.id).then((res) => {
                     if(res){
                         let ranchName = res.ranchName
                         fn.getSlimeInfo(res.slimes).then((res) => {
@@ -74,23 +72,16 @@ client.on('message', msg => {
             })
 
         case 'find':
-            fn.getRandomSlime().then((res) => {
+            fn.getRandomSlime(msg.guild.id).then((res) => {
+                console.log(res)
                 embed
                 .setTitle("Congrats! You found a " + res.name)
                 .setColor(res.color)
                 .setThumbnail("attachment://" + res.img + ".png")
                 .setDescription("Welcome this **adorable** " + res.name + " to your ranch! \n\n For more info about this cutie type `!s info " + res.name + "` \n Now go pet this slimy boi!");
-                ranch.registerNewSlime(res.name, msg.guild.id)
+                msg.channel.send({embed, files: [{ attachment: "Data/img/" + res.img + ".png", name: res.img + ".png" }] })
             })
-            return new Promise((fulfill, reject) => {
-                ranch.registerNewSlime(newSlime.name, msg.guild.id).then((res) => {
-                    if(res){
-                        fulfill(msg.channel.send({ embed, files: [{ attachment: "Data/img/" + newSlime.img + ".png", name: newSlime.img + ".png" }] }));
-                    }else{
-                        fulfill("Something went wrong adding this cutie to your ranch :( Better luck next time");
-                    }
-                }, reject);
-            })
+        break;
 
         case 'foods':
             let foods = [];
