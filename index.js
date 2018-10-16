@@ -35,7 +35,7 @@ client.on('message', msg => {
                 }, reject)
             });
 
-        case 'nameranch':
+        case 'setname':
             return new Promise((fulfill, reject) => {
                 let ranchName = args.join(" ")
                 ranch.addRanchToDB(ranchName, msg.guild.id).then((res) => {
@@ -49,9 +49,14 @@ client.on('message', msg => {
                 }, reject)
             })
 
-        case 'resetranch':
-            ranch.resetRanch(msg.guild.id)
-        break;
+        case 'reset':
+            return new Promise((fulfill, reject) => {
+                fn.resetRanch(msg.guild.id, args.join(" ")).then((res) => {
+                    if(res){
+                        fulfill(msg.channel.send(`Your ranch has been reset and renamed to ${ args.join(" ") }`))
+                    }
+                }, reject)
+            })
 
         case 'ranch':
             return new Promise((fulfill, reject) => {
@@ -104,6 +109,7 @@ client.on('message', msg => {
         case 'info':
             return new Promise((fulfill, reject) => {
                 fn.getSlimeInfo(args.join(" ")).then((res) => {
+                    console.log(res)
                     if(res != undefined){
                         let url = `attachment://${ res.img }.png`;
                         embed

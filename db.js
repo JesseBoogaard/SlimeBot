@@ -2,6 +2,7 @@ const sqlite3 = require('sqlite3').verbose();
 const admin = require("firebase-admin");
 const startingCash = 1000;
 const slimeDefaults = require("./Data/slimeDefault.json");
+let ranches;
 let db;
 let oldDoc;
 require('dotenv').config();
@@ -14,12 +15,13 @@ class SlimeDB{
             databaseURL: "https://slimebot-01.firebaseio.com"
         });
         db = admin.firestore();
+        ranches = db.collection('ranches')
         console.log("connected to db");
     }
-
-    doesRanchExist(ID){
+// start ranch functions
+    doesRanchExist(serverID){
         return new Promise((fulfill, reject) => {
-            db.collection('ranches').doc(ID).get().then((doc) => {
+            ranches.doc(serverID).get().then((doc) => {
                 if(!doc.exists){
                     fulfill(false)
                 }else if(doc.exists){
@@ -31,11 +33,25 @@ class SlimeDB{
         })
     }
 
-    addRanchToDB(ranchName, ID){
+    resetRanch(serverID, newName){
         return new Promise((fulfill, reject) => {
-            this.doesRanchExist(ID).then((res) => {
+            ranches.doc(serverID).set({
+                money: startingCash,
+                ranchName: newName,
+                plorts: [],
+                slimes: slimeDefaults,
+                foods: []
+            }).then(() => {
+                fulfill(true);
+            }, reject)
+        })
+    }
+
+    addRanchToDB(ranchName, serverID){
+        return new Promise((fulfill, reject) => {
+            this.doesRanchExist(serverID).then((res) => {
                 if(!res){
-                    db.collection('ranches').doc(ID)
+                    db.collection('ranches').doc(serverID)
                     .set({
                         money: startingCash,
                         ranchName: ranchName,
@@ -52,21 +68,19 @@ class SlimeDB{
         })
     }
 
-    feedFoodToSlime(foodName, ID){
+    getRanchInfo(serverID){
         return new Promise((fulfill, reject) => {
-            console.log(foodName);
-            let sql = `SELECT * FROM foods WHERE foodName = ${foodName} AND ranchID = ${ID}`;
-            this.db.get(sql, (err, result) => {
-                if(err){
-                    reject(err);
+            db.collection('ranches').doc(serverID).get().then(doc => {
+                if(!doc.exists){
+                    fulfill(false)
                 }else{
-                    console.log(result);
-                    fulfill(result);
+                    fulfill(doc.data());
                 }
-            })
+            }, reject)
         })
     }
-
+// end ranch functions
+// start slime functions
     registerNewSlime(serverID, newSlime) {
         return new Promise((fulfill, reject) => {
             this._cloneRanch(serverID).then((doc) => {
@@ -88,19 +102,8 @@ class SlimeDB{
             reject(err)
         })
     }
-
-    getRanchInfo(serverID){
-        return new Promise((fulfill, reject) => {
-            db.collection('ranches').doc(serverID).get().then(doc => {
-                if(!doc.exists){
-                    fulfill(false)
-                }else{
-                    fulfill(doc.data());
-                }
-            }, reject)
-        })
-    }
-
+// end slime functions
+// private functions
     _overWriteRemote(serverID, newDoc){
         return new Promise((fulfill, reject) => {
             db.collection('ranches').doc(serverID).set(newDoc).then((res) => {

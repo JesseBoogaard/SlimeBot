@@ -6,7 +6,7 @@ class Functions{
     constructor(){
 
     }
-
+// begin of ranch functions
     doesRanchExist(serverID){
         return new Promise((fulfill, reject) => {
             ranch.doesRanchExist(serverID).then((res) => {
@@ -23,6 +23,27 @@ class Functions{
         })
     }
 
+    getRanchInfo(serverID){
+        return new Promise((fulfill, reject) => {
+            ranch.getRanchInfo(serverID).then((res) => {
+                fulfill(res)
+            }, reject)
+        })
+    }
+
+    resetRanch(serverID, newName){
+        return new Promise((fulfill, reject) => {
+            ranch.resetRanch(serverID, newName).then((res) => {
+                if(res){
+                    fulfill(res)
+                }else{
+                    reject(res)
+                }
+            })
+        })
+    }
+// end of ranch functions
+// begin of slime functions
     getSlimeInfo(slimeName){
         return new Promise((fulfill, reject) => {
             let requestedSlime = slimeName.toLowerCase()
@@ -47,14 +68,6 @@ class Functions{
         })
     }
 
-    getRanchInfo(serverID){
-        return new Promise((fulfill, reject) => {
-            ranch.getRanchInfo(serverID).then((res) => {
-                fulfill(res)
-            }, reject)
-        })
-    }
-
     getRandomSlime(serverID){
         return new Promise((fulfill, reject) => {
             let randomKey = Object.keys(availableSlimes)[Math.floor(Math.random() * Object.keys(availableSlimes).length)]
@@ -68,6 +81,7 @@ class Functions{
             reject(err)
         })
     }
+// end of slime functions
 }
 
 module.exports = Functions;
