@@ -7,11 +7,29 @@ class Functions{
 
     }
 
+    doesRanchExist(serverID){
+        return new Promise((fulfill, reject) => {
+            ranch.doesRanchExist(serverID).then((res) => {
+                fulfill(res)
+            }, reject)
+        })
+    }
+
+    addRanchToDB(ranchName, serverID){
+        return new Promise((fulfill, reject) => {
+            ranch.addRanchToDB(ranchName, serverID).then((res) => {
+                fulfill(res)
+            }, reject)
+        })
+    }
+
     getSlimeInfo(res){
         return new Promise((fulfill, reject) => {
             let str = "**Slimes:** \n\n";
             res.forEach((slime) => {
-                str = str + slime.slimeName + "s: "+ slime.amount + " \n";
+                if(slime.amount > 0){
+                    str = str + slime.slimeName + "s: "+ slime.amount + " \n";
+                }
             })
             fulfill(str);
         })
@@ -33,7 +51,7 @@ class Functions{
                 if(res){
                     fulfill(newSlime);
                 }
-            })
+            }, reject)
         }).catch((err) => {
             reject(err)
         })

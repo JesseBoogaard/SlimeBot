@@ -22,14 +22,14 @@ client.on('message', msg => {
         switch(command){
         case 'start':
             return new Promise((fulfill, reject) => {
-                ranch.doesRanchExist(msg.guild.id).then((res) => {
+                fn.doesRanchExist(msg.guild.id).then((res) => {
                     if(res == true){
-                        fulfill(msg.channel.send("There's already a lovely ranch for this server! Go pet your slimes :) \n\n Want to start over? type `!s resetranch` then `!s start` to start a new one :)"));
+                        fulfill(msg.channel.send("There's already a lovely ranch for this server! Go pet your slimes :) \n\n Want to start over? type `s! resetranch` then `!s start` to start a new one :)"));
                     }else if(res == false){
                         embed
                         .setTitle("Welcome! Let's start a new ranch!")
                         .setColor(0xFFFFFF)
-                        .setDescription("Welcome to Slimerancher Discord edition! \n Let's start with a nice name for your awesome new ranch! \n\n Type `!s nameranch [name_of_your_ranch]` and press enter")
+                        .setDescription("Welcome to Slimerancher Discord edition! \n Let's start with a nice name for your awesome new ranch! \n\n Type `s! nameranch [name_of_your_ranch]` and press enter")
                         fulfill(msg.channel.send(embed));
                     }
                 }, reject)
@@ -77,7 +77,7 @@ client.on('message', msg => {
                 .setTitle("Congrats! You found a " + res.name)
                 .setColor(res.color)
                 .setThumbnail("attachment://" + res.img + ".png")
-                .setDescription("Welcome this **adorable** " + res.name + " to your ranch! \n\n For more info about this cutie type `!s info " + res.name + "` \n Now go pet this slimy boi!");
+                .setDescription("Welcome this **adorable** " + res.name + " to your ranch! \n\n For more info about this cutie type `s! info " + res.name + "` \n Now go pet this slimy boi!");
                 msg.channel.send({embed, files: [{ attachment: "Data/img/" + res.img + ".png", name: res.img + ".png" }] })
             })
         break;

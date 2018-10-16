@@ -3,7 +3,9 @@ const admin = require("firebase-admin");
 const startingCash = 1000;
 const slimeDefaults = require("./Data/slimeDefault.json");
 let db;
+let oldDoc;
 require('dotenv').config();
+
 class SlimeDB{
     constructor(){
         let serviceAccount = require(process.env.SERVICEACCOUNT);
@@ -67,15 +69,17 @@ class SlimeDB{
 
     registerNewSlime(serverID, newSlime) {
         return new Promise((fulfill, reject) => {
-            db.collection('ranches').doc(serverID).get().then((doc) => {
-                if (doc.exists) {
-                    let oldDoc = doc.data()
-                    for(let slime in oldDoc.slimes) {
-                        if(oldDoc.slimes[slime].slimeName == (newSlime.name).toLowerCase()) {
-                            oldDoc.slimes[slime].amount += 1;
-                            let newDoc = oldDoc
-                            db.collection('ranches').doc(serverID).set(newDoc)
-                            fulfill(true)
+            this._cloneRanch(serverID).then((doc) => {
+                if(doc != undefined) {
+                    for(let slime in doc.slimes) {
+                        if(doc.slimes[slime].slimeName == (newSlime.name).toLowerCase()) {
+                            doc.slimes[slime].amount += 1;
+                            let newDoc = doc;
+                            this._overWriteRemote(serverID, newDoc).then((res) => {
+                                if(res){
+                                    fulfill(res)
+                                }
+                            })
                         }
                     }
                 }
@@ -92,6 +96,25 @@ class SlimeDB{
                     fulfill(false)
                 }else{
                     fulfill(doc.data());
+                }
+            }, reject)
+        })
+    }
+
+    _overWriteRemote(serverID, newDoc){
+        return new Promise((fulfill, reject) => {
+            db.collection('ranches').doc(serverID).set(newDoc).then((res) => {
+                fulfill(true)
+            }, reject)
+        })
+    }
+
+    _cloneRanch(serverID){
+        return new Promise((fulfill, reject) => {
+            db.collection('ranches').doc(serverID).get().then((doc) => {
+                if(doc.exists){
+                    oldDoc = doc.data()
+                    fulfill(oldDoc)
                 }
             }, reject)
         })
