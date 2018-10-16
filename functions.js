@@ -23,12 +23,24 @@ class Functions{
         })
     }
 
-    getSlimeInfo(res){
+    getSlimeInfo(slimeName){
         return new Promise((fulfill, reject) => {
-            let str = "**Slimes:** \n\n";
+            let requestedSlime = slimeName.toLowerCase()
+            for(let i = 0; i < Object.keys(availableSlimes).length; i++){
+                if(availableSlimes[i].name.toLowerCase() == requestedSlime){
+                    requestedSlime = availableSlimes[i]
+                    fulfill(requestedSlime)
+                }
+            }
+        })
+    }
+
+    getSlimeInfoForRanch(res){
+        return new Promise((fulfill, reject) => {
+            let str = `**Slimes:** \n\n`;
             res.forEach((slime) => {
                 if(slime.amount > 0){
-                    str = str + slime.slimeName + "s: "+ slime.amount + " \n";
+                    str = str + `${ slime.slimeName }s: ${ slime.amount }\n`;
                 }
             })
             fulfill(str);

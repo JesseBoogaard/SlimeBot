@@ -24,12 +24,12 @@ client.on('message', msg => {
             return new Promise((fulfill, reject) => {
                 fn.doesRanchExist(msg.guild.id).then((res) => {
                     if(res == true){
-                        fulfill(msg.channel.send("There's already a lovely ranch for this server! Go pet your slimes :) \n\n Want to start over? type `s! resetranch` then `!s start` to start a new one :)"));
+                        fulfill(msg.channel.send(`There's already a lovely ranch for this server! Go pet your slimes :) \n\n Want to start over? type \`s! resetranch\` then \`!s start\` to start a new one :)`));
                     }else if(res == false){
                         embed
-                        .setTitle("Welcome! Let's start a new ranch!")
+                        .setTitle(`Welcome! Let's start a new ranch!`)
                         .setColor(0xFFFFFF)
-                        .setDescription("Welcome to Slimerancher Discord edition! \n Let's start with a nice name for your awesome new ranch! \n\n Type `s! nameranch [name_of_your_ranch]` and press enter")
+                        .setDescription(`Welcome to Slimerancher Discord edition! \n Let's start with a nice name for your awesome new ranch! \n\n Type \`s! nameranch [name_of_your_ranch]\` and press enter`)
                         fulfill(msg.channel.send(embed));
                     }
                 }, reject)
@@ -40,11 +40,11 @@ client.on('message', msg => {
                 let ranchName = args.join(" ")
                 ranch.addRanchToDB(ranchName, msg.guild.id).then((res) => {
                     if(res){
-                        fulfill(msg.channel.send("**Congrats!** You're now a real slime rancher, and proud owner of *" + ranchName + "!* \n Good luck out there :) \n ps. you got some starting cash to buy some food ;)"));
+                        fulfill(msg.channel.send(`**Congrats!** You are now a real slime rancher, and proud owner of *${ ranchName }!* \n Good luck out there :) \n ps. you got some starting cash to buy some food ;)`));
                     }else if(res == false){
-                        fulfill(msg.channel.send("There's already a ranch for this server, silly! Go pet your slimes ;)"));
+                        fulfill(msg.channel.send(`There's already a ranch for this server, silly! Go pet your slimes ;)`));
                     }else{
-                        fulfill(msg.channel.send("Something went wrong while adding your ranch, please try again later :)"))
+                        fulfill(msg.channel.send(`Something went wrong while adding your ranch, please try again later :)`))
                     }
                 }, reject)
             })
@@ -58,15 +58,15 @@ client.on('message', msg => {
                 fn.getRanchInfo(msg.guild.id).then((res) => {
                     if(res){
                         let ranchName = res.ranchName
-                        fn.getSlimeInfo(res.slimes).then((res) => {
+                        fn.getSlimeInfoForRanch(res.slimes).then((res) => {
                             embed
-                            .setTitle("Here's a summary of " + ranchName)
+                            .setTitle(`Here's a summary of ${ ranchName }`)
                             .setColor(0x42372D)
                             .setDescription(res);
                             fulfill(msg.channel.send(embed));
                         })
                     }else{
-                        fulfill(msg.channel.send("Couldn't get ranch info at this time. Try again later ;)"));
+                        fulfill(msg.channel.send(`Couldn't get ranch info at this time. Try again later ;)`));
                     }
                 }, reject)
             })
@@ -74,11 +74,11 @@ client.on('message', msg => {
         case 'find':
             fn.getRandomSlime(msg.guild.id).then((res) => {
                 embed
-                .setTitle("Congrats! You found a " + res.name)
+                .setTitle(`Congrats! You found a ${ res.name }`)
                 .setColor(res.color)
-                .setThumbnail("attachment://" + res.img + ".png")
-                .setDescription("Welcome this **adorable** " + res.name + " to your ranch! \n\n For more info about this cutie type `s! info " + res.name + "` \n Now go pet this slimy boi!");
-                msg.channel.send({embed, files: [{ attachment: "Data/img/" + res.img + ".png", name: res.img + ".png" }] })
+                .setThumbnail(`attachment://${ res.img }.png`)
+                .setDescription(`Welcome this **adorable** ${ res.name } to your ranch! \n\n For more info about this cutie type \`s! info ${ res.name } \n\` Now go pet this slimy boi!`);
+                msg.channel.send({embed, files: [{ attachment: `Data/img/${ res.img }.png`, name: `${ res.img }.png` }] })
             })
         break;
 
@@ -88,8 +88,8 @@ client.on('message', msg => {
                 foods.push(food[i].name);
             }
             msg.channel.send({
-                "embed": {
-                    title: "Available foods are the following (feeding system = work in progress)",
+                'embed': {
+                    title: `Available foods are the following (feeding system = work in progress)`,
                     color: 0xE05E6B,
                     description: foods.join(",\n")
                 }
@@ -102,20 +102,19 @@ client.on('message', msg => {
         break;
 
         case 'info':
-            let requestedSlime;
-            for(let i = 0; i < Object.keys(availableSlimes).length; i++){
-                if(availableSlimes[i].name.toLowerCase() == args.join(" ").toLowerCase()){
-                    requestedSlime = availableSlimes[i]
-                }
-            }
-            let url = "attachment://" + requestedSlime.img + ".png"
-            embed
-            .setTitle("The " + requestedSlime.name)
-            .setColor(requestedSlime.color)
-            .setDescription(requestedSlime.info)
-            .setThumbnail(url);
-            msg.channel.send({ embed, files: [{ attachment: "Data/img/" + requestedSlime.img + ".png", name: requestedSlime.img + ".png" }] });
-        break;
+            return new Promise((fulfill, reject) => {
+                fn.getSlimeInfo(args.join(" ")).then((res) => {
+                    if(res != undefined){
+                        let url = `attachment://${ res.img }.png`;
+                        embed
+                        .setTitle(`The ${ res.name }`)
+                        .setColor(res.color)
+                        .setDescription(res.info)
+                        .setThumbnail(url);
+                        fulfill(msg.channel.send({ embed, files: [{ attachment: `Data/img/${ res.img }.png`, name: `${ res.img }.png` }] }));
+                    }
+                }, reject)
+            })
         }
     }
 });
