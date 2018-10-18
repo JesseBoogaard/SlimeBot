@@ -38,7 +38,7 @@ client.on('message', msg => {
         case 'setname':
             return new Promise((fulfill, reject) => {
                 let ranchName = args.join(" ")
-                ranch.addRanchToDB(ranchName, msg.guild.id).then((res) => {
+                fn.addRanchToDB(ranchName, msg.guild.id).then((res) => {
                     if(res){
                         fulfill(msg.channel.send(`**Congrats!** You are now a real slime rancher, and proud owner of *${ ranchName }!* \n Good luck out there :) \n ps. you got some starting cash to buy some food ;)`));
                     }else if(res == false){
@@ -101,15 +101,20 @@ client.on('message', msg => {
             });
         break;
 
-        case 'select':
-            // let slimeToSelect = args.join(" ");
-            // ranch.selectSlime(slimeToSelect)
-        break;
+        case 'getplorts':
+            return new Promise((fulfill, reject) => {
+                fn.getPlorts(msg.guild.id).then((res) => {
+                    embed
+                    .setTitle(`Plort inventory`)
+                    .setColor(0x42372D)
+                    .setDescription(res)
+                    fulfill(msg.channel.send(embed))
+                })
+            })
 
         case 'info':
             return new Promise((fulfill, reject) => {
                 fn.getSlimeInfo(args.join(" ")).then((res) => {
-                    console.log(res)
                     if(res != undefined){
                         let url = `attachment://${ res.img }.png`;
                         embed

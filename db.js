@@ -4,6 +4,7 @@ const slimeDefaults = require("./Data/slimeDefault.json");
 let ranches;
 let db;
 let oldDoc;
+let plorts = 0;
 require('dotenv').config();
 
 class SlimeDB{
@@ -37,7 +38,6 @@ class SlimeDB{
             ranches.doc(serverID).set({
                 money: startingCash,
                 ranchName: newName,
-                plorts: [],
                 slimes: slimeDefaults,
                 foods: []
             }).then(() => {
@@ -54,7 +54,6 @@ class SlimeDB{
                     .set({
                         money: startingCash,
                         ranchName: ranchName,
-                        plorts: [],
                         slimes: slimeDefaults,
                         foods: []
                     }).then(() => {
@@ -99,6 +98,24 @@ class SlimeDB{
             }, reject)
         }).catch((err) => {
             reject(err)
+        })
+    }
+
+    getPlorts(serverID){
+        return new Promise((fulfill, reject) => {
+            let newDoc;
+            console.log(newDoc)
+            this._cloneRanch(serverID).then((doc) => {
+                for(let i = 0; i < doc.slimes.length; i++){
+                    doc.slimes[i].plorts += Math.floor(Math.random() * Math.floor(doc.slimes[i].amount))
+                    newDoc = doc;
+                }
+                    this._overWriteRemote(serverID, newDoc).then((res) => {
+                        if(res){
+                            fulfill(newDoc.slimes)
+                        }
+                    })
+            }, reject)
         })
     }
 // end slime functions

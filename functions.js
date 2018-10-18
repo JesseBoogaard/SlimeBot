@@ -1,7 +1,7 @@
 const SlimeDB = require('./db.js');
 const ranch = new SlimeDB();
 const availableSlimes = require('./Data/Slimes.json');
-
+let newPlorts = 0
 class Functions{
     constructor(){
 
@@ -79,6 +79,20 @@ class Functions{
             }, reject)
         }).catch((err) => {
             reject(err)
+        })
+    }
+
+    getPlorts(serverID){
+        return new Promise((fulfill, reject) => {
+            ranch.getPlorts(serverID).then((res) => {
+                let str = `**Plorts:** \n\n`
+                res.forEach((slime) => {
+                    if(slime.plorts > 0){
+                        str = str + `${ slime.plorts } ${ slime.slimeName } plorts \n`
+                    }
+                })
+                fulfill(str)
+            })
         })
     }
 // end of slime functions

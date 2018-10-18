@@ -2,67 +2,67 @@
     {
         "slimeName": "pink slime",
         "amount": 0,
-        "id": 0
+        "plorts": 0
     },
     {
         "slimeName": "tabby slime",
         "amount": 0,
-        "id": 1
+        "plorts": 0
     },
     {
         "slimeName": "rock slime",
         "amount": 0,
-        "id": 2
+        "plorts": 0
     },
     {
         "slimeName": "hunter slime",
         "amount": 0,
-        "id": 3
+        "plorts": 0
     },
     {
         "slimeName": "honey slime",
         "amount": 0,
-        "id": 4
+        "plorts": 0
     },
     {
         "slimeName": "boom slime",
         "amount": 0,
-        "id": 5
+        "plorts": 0
     },
     {
         "slimeName": "rad slime",
         "amount": 0,
-        "id": 6
+        "plorts": 0
     },
     {
         "slimeName": "quantum slime",
         "amount": 0,
-        "id": 7
+        "plorts": 0
     },
     {
         "slimeName": "dervish slime",
         "amount": 0,
-        "id": 8
+        "plorts": 0
     },
 
     {
         "slimeName": "tangle slime",
         "amount": 0,
-        "id": 9
+        "plorts": 0
     },
     {
         "slimeName": "crystal slime",
         "amount": 0,
-        "id": 10
+        "plorts": 0
     },
     {
         "slimeName": "mosaic slime",
         "amount": 0,
-        "id": 11
+        "plorts": 0
     },
     {
         "slimeName": "phosphor slime",
         "amount": 0,
-        "id": 12
+        "plorts": 0
     }
 ]
