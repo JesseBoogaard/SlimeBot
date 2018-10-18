@@ -1,4 +1,3 @@
-const sqlite3 = require('sqlite3').verbose();
 const admin = require("firebase-admin");
 const startingCash = 1000;
 const slimeDefaults = require("./Data/slimeDefault.json");
