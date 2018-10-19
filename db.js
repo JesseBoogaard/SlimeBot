@@ -104,7 +104,6 @@ class SlimeDB{
     getPlorts(serverID){
         return new Promise((fulfill, reject) => {
             let newDoc;
-            console.log(newDoc)
             this._cloneRanch(serverID).then((doc) => {
                 for(let i = 0; i < doc.slimes.length; i++){
                     doc.slimes[i].plorts += Math.floor(Math.random() * Math.floor(doc.slimes[i].amount))
