@@ -4,7 +4,6 @@ const {
     RichEmbed,
     Client
 } = require('discord.js');
-const food = require('./Data/Foods.json');
 const Functions = require('./functions.js');
 const fn = new Functions();
 require('dotenv').config();
@@ -82,35 +81,43 @@ client.on('message', msg => {
                 })
 
             case 'find':
+            return new Promise((fulfill, reject) => {
                 fn.getRandomSlime(msg.guild.id).then((res) => {
-                    embed
-                        .setTitle(`Congrats! You found a ${ res.name }`)
-                        .setColor(res.color)
-                        .setThumbnail(`attachment://${ res.img }.png`)
-                        .setDescription(`Welcome this **adorable** ${ res.name } to your ranch! \n\n For more info about this cutie type \`s! info ${ res.name } \n\` Now go pet this slimy boi!`);
-                    msg.channel.send({
-                        embed,
-                        files: [{
-                            attachment: `Data/img/${ res.img }.png`,
-                            name: `${ res.img }.png`
-                        }]
-                    })
+                    if(res != {}){
+                        embed
+                            .setTitle(`Congrats! You found a ${ res.name }`)
+                            .setColor(res.color)
+                            .setThumbnail(`attachment://${ res.img }.png`)
+                            .setDescription(`Welcome this **adorable** ${ res.name } to your ranch! \n\n For more info about this cutie type \`s! info ${ res.name } \n\` Now go pet this slimy boi!`);
+                        fulfill(msg.channel.send({
+                            embed,
+                            files: [{
+                                attachment: `Data/img/${ res.img }.png`,
+                                name: `${ res.img }.png`
+                            }]
+                        }))
+                    }else{
+                        reject(msg.channel.send(`Something went wrong trying to get a slime, try again later! :)`));
+                    }
                 })
-                break;
+            })
 
             case 'foods':
-                let foods = [];
-                for (let i = 0; i < Object.keys(food).length; i++) {
-                    foods.push(food[i].name);
-                }
-                msg.channel.send({
-                    'embed': {
-                        title: `Available foods are the following (feeding system = work in progress)`,
-                        color: 0xE05E6B,
-                        description: foods.join(",\n")
+            return new Promise((fulfill, reject) => {
+                fn.getFoodInfo().then((res) => {
+                    if(res != {}){
+                        fulfill(msg.channel.send({
+                            'embed': {
+                                title: `Available foods are the following (feeding system = work in progress)`,
+                                color: 0xE05E6B,
+                                description: res.join(",\n")
+                            }
+                        }));
+                    }else{
+                        reject(msg.channel.send(`Something went wrong trying to get food info, try again later! :)`));
                     }
-                });
-                break;
+                })
+            })
 
             case 'getplorts':
                 return new Promise((fulfill, reject) => {

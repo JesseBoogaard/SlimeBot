@@ -1,6 +1,7 @@
 const SlimeDB = require('./db.js');
 const ranch = new SlimeDB();
 const availableSlimes = require('./Data/Slimes.json');
+const food = require('./Data/Foods.json');
 let newPlorts = 0
 class Functions {
     constructor() {
@@ -96,6 +97,17 @@ class Functions {
         })
     }
     // end of slime functions
+    // begin of food functions
+    getFoodInfo(){
+        return new Promise((fulfill, reject) => {
+            let foods = [];
+                for (let i = 0; i < Object.keys(food).length; i++) {
+                    foods.push(food[i].name);
+                }
+                fulfill(foods);
+        })
+    }
+    // end of food functions
 }
 
 module.exports = Functions;
