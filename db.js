@@ -7,8 +7,8 @@ let oldDoc;
 let plorts = 0;
 require('dotenv').config();
 
-class SlimeDB{
-    constructor(){
+class SlimeDB {
+    constructor() {
         let serviceAccount = require(process.env.SERVICEACCOUNT);
         admin.initializeApp({
             credential: admin.credential.cert(serviceAccount),
@@ -18,22 +18,22 @@ class SlimeDB{
         ranches = db.collection('ranches')
         console.log("connected to db");
     }
-// start ranch functions
-    doesRanchExist(serverID){
+    // start ranch functions
+    doesRanchExist(serverID) {
         return new Promise((fulfill, reject) => {
             ranches.doc(serverID).get().then((doc) => {
-                if(!doc.exists){
+                if (!doc.exists) {
                     fulfill(false)
-                }else if(doc.exists){
+                } else if (doc.exists) {
                     fulfill(true)
-                }else{
+                } else {
                     reject(err);
                 }
             })
         })
     }
 
-    resetRanch(serverID, newName){
+    resetRanch(serverID, newName) {
         return new Promise((fulfill, reject) => {
             ranches.doc(serverID).set({
                 money: startingCash,
@@ -46,49 +46,49 @@ class SlimeDB{
         })
     }
 
-    addRanchToDB(ranchName, serverID){
+    addRanchToDB(ranchName, serverID) {
         return new Promise((fulfill, reject) => {
             this.doesRanchExist(serverID).then((res) => {
-                if(!res){
+                if (!res) {
                     db.collection('ranches').doc(serverID)
-                    .set({
-                        money: startingCash,
-                        ranchName: ranchName,
-                        slimes: slimeDefaults,
-                        foods: []
-                    }).then(() => {
-                        fulfill(true);
-                    }, reject)
-                }else{
+                        .set({
+                            money: startingCash,
+                            ranchName: ranchName,
+                            slimes: slimeDefaults,
+                            foods: []
+                        }).then(() => {
+                            fulfill(true);
+                        }, reject)
+                } else {
                     fulfill(false)
                 };
             })
         })
     }
 
-    getRanchInfo(serverID){
+    getRanchInfo(serverID) {
         return new Promise((fulfill, reject) => {
             db.collection('ranches').doc(serverID).get().then(doc => {
-                if(!doc.exists){
+                if (!doc.exists) {
                     fulfill(false)
-                }else{
+                } else {
                     fulfill(doc.data());
                 }
             }, reject)
         })
     }
-// end ranch functions
-// start slime functions
+    // end ranch functions
+    // start slime functions
     registerNewSlime(serverID, newSlime) {
         return new Promise((fulfill, reject) => {
             this._cloneRanch(serverID).then((doc) => {
-                if(doc != undefined) {
-                    for(let slime in doc.slimes) {
-                        if(doc.slimes[slime].slimeName == (newSlime.name).toLowerCase()) {
+                if (doc != undefined) {
+                    for (let slime in doc.slimes) {
+                        if (doc.slimes[slime].slimeName == (newSlime.name).toLowerCase()) {
                             doc.slimes[slime].amount += 1;
                             let newDoc = doc;
                             this._overWriteRemote(serverID, newDoc).then((res) => {
-                                if(res){
+                                if (res) {
                                     fulfill(res)
                                 }
                             })
@@ -101,25 +101,25 @@ class SlimeDB{
         })
     }
 
-    getPlorts(serverID){
+    getPlorts(serverID) {
         return new Promise((fulfill, reject) => {
             let newDoc;
             this._cloneRanch(serverID).then((doc) => {
-                for(let i = 0; i < doc.slimes.length; i++){
+                for (let i = 0; i < doc.slimes.length; i++) {
                     doc.slimes[i].plorts += Math.floor(Math.random() * Math.floor(doc.slimes[i].amount))
                     newDoc = doc;
                 }
-                    this._overWriteRemote(serverID, newDoc).then((res) => {
-                        if(res){
-                            fulfill(newDoc.slimes)
-                        }
-                    })
+                this._overWriteRemote(serverID, newDoc).then((res) => {
+                    if (res) {
+                        fulfill(newDoc.slimes)
+                    }
+                })
             }, reject)
         })
     }
-// end slime functions
-// private functions
-    _overWriteRemote(serverID, newDoc){
+    // end slime functions
+    // private functions
+    _overWriteRemote(serverID, newDoc) {
         return new Promise((fulfill, reject) => {
             db.collection('ranches').doc(serverID).set(newDoc).then((res) => {
                 fulfill(true)
@@ -127,10 +127,10 @@ class SlimeDB{
         })
     }
 
-    _cloneRanch(serverID){
+    _cloneRanch(serverID) {
         return new Promise((fulfill, reject) => {
             db.collection('ranches').doc(serverID).get().then((doc) => {
-                if(doc.exists){
+                if (doc.exists) {
                     oldDoc = doc.data()
                     fulfill(oldDoc)
                 }
