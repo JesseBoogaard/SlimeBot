@@ -78,8 +78,6 @@ class Functions {
                     fulfill(newSlime);
                 }
             }, reject)
-        }).catch((err) => {
-            reject(err)
         })
     }
 
