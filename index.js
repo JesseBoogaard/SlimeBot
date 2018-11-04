@@ -127,7 +127,7 @@ client.on('message', msg => {
                             .setColor(0x42372D)
                             .setDescription(res)
                         fulfill(msg.channel.send(embed));
-                    })
+                    }, reject)
                 })
 
             case 'info':

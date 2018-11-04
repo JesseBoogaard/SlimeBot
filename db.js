@@ -23,9 +23,9 @@ class SlimeDB {
         return new Promise((fulfill, reject) => {
             ranches.doc(serverID).get().then((doc) => {
                 if (!doc.exists) {
-                    fulfill(false)
+                    fulfill(false);
                 } else if (doc.exists) {
-                    fulfill(true)
+                    fulfill(true);
                 } else {
                     reject(err);
                 }

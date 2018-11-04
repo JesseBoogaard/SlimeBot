@@ -51,7 +51,7 @@ class Functions {
             for (let i = 0; i < Object.keys(availableSlimes).length; i++) {
                 if (availableSlimes[i].name.toLowerCase() == requestedSlime) {
                     requestedSlime = availableSlimes[i]
-                    fulfill(requestedSlime)
+                    fulfill(requestedSlime);
                 }
             }
         })
@@ -64,7 +64,7 @@ class Functions {
                 if (slime.amount > 0) {
                     str = str + `${ slime.slimeName }s: ${ slime.amount }\n`;
                 }
-            })
+            }, reject());
             fulfill(str);
         })
     }
@@ -92,8 +92,8 @@ class Functions {
                         str = str + `${ slime.plorts } ${ slime.slimeName } plorts \n`
                     }
                 })
-                fulfill(str)
-            })
+                fulfill(str);
+            }, reject())
         })
     }
     // end of slime functions
@@ -104,7 +104,11 @@ class Functions {
                 for (let i = 0; i < Object.keys(food).length; i++) {
                     foods.push(food[i].name);
                 }
-                fulfill(foods);
+                if(foods != []){
+                    fulfill(foods);
+                }else{
+                    reject();
+                }
         })
     }
     // end of food functions
