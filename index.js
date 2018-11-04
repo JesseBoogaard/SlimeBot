@@ -33,7 +33,7 @@ client.on('message', msg => {
                             embed
                                 .setTitle(`Welcome! Let's start a new ranch!`)
                                 .setColor(0xFFFFFF)
-                                .setDescription(`Welcome to Slimerancher Discord edition! \n Let's start with a nice name for your awesome new ranch! \n\n Type \`s! nameranch [name_of_your_ranch]\` and press enter`)
+                                .setDescription(`Welcome to Slimerancher Discord edition! \n Let's start with a nice name for your awesome new ranch! \n\n Type \`s! setname [name_of_your_ranch]\` and press enter`)
                             fulfill(msg.channel.send(embed));
                         }
                     }, reject)
@@ -150,6 +150,22 @@ client.on('message', msg => {
                         }
                     }, reject);
                 })
+            
+            case 'commands':
+                embed
+                    .setTitle(`List of commands:`)
+                    .setColor(0x42372D)
+                    .setDescription(`
+                        \`s! start\` to get started \n
+                        \`s! setname\` to set a name for your new ranch \n
+                        \`s! reset\` to reset your ranch \n
+                        \`s! ranch\` for a small overview of your ranch stats \n
+                        \`s! find\` to find and add a new slime to your ranch \n
+                        \`s! info <slime name (i.e "pink slime")>\` to get some info about a slime
+                    `)
+
+                msg.channel.send(embed);
+            break;
         }
     }
 });
