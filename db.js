@@ -96,8 +96,6 @@ class SlimeDB {
                     }
                 }
             }, reject)
-        }).catch((err) => {
-            reject(err)
         })
     }
 
