@@ -161,7 +161,7 @@ client.on('message', msg => {
                         \`s! reset\` to reset your ranch \n
                         \`s! ranch\` for a small overview of your ranch stats \n
                         \`s! find\` to find and add a new slime to your ranch \n
-                        \`s! info <slime name (i.e "pink slime")>\` to get some info about a slime
+                        \`s! info <slime name> (i.e "s! info pink slime")\` to get some info about a slime
                     `)
 
                 msg.channel.send(embed);
